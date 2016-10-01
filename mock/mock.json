@@ -23,7 +23,7 @@
 		},
 		"second":{
 			"tag" : "txt",
-			"content": "华中师范大学9号教学楼"
+			"content": ["1","2","3"]
 		},
 		"api.courses":{
 			"title": "second"
