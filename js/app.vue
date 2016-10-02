@@ -23,12 +23,13 @@
 			return {
 				list:[],
 				scroll:0,
-				toph:0,
 				bottomh:0,
-				scrollh:0
+				scrollh:0,
+				no:0,
+				tdh:0
 			}
 		},
-		created: function(){
+		created(){
 			for (var i = 0; i < 500; i++) {
 				this.list.push({text:"1",show:true})
 			}
@@ -36,34 +37,30 @@
 		methods:{
 			handleScroll () {
 				this.scroll = this.$els.box.scrollTop
-				// var scrollh = this.$els.box.scrollHeight
 				var boxh = this.$els.box.clientHeight
-				var tdh = document.getElementsByTagName('td')[0].offsetHeight
 				var num = this.scroll / this.scrollh * this.list.length
-				var no = Math.ceil(num - 0.5)
-				console.log(no)
-				this.toph = num * tdh
-				this.bottomh = this.scrollh - this.toph - tdh * 10
+				this.no = Math.ceil(num - 0.5)
+				this.bottomh = this.scrollh - this.scroll - this.tdh * 10
 				var  self = this
-    			self.list.forEach(function(li){
-        			li.show = false;
-      			})
-	      		self.$nextTick(function(){
-	      			self.list[no].show = true
-					// for(var i = 0;i < 500;i++){
-					// 	(function(){
-					// 		if(i >= no  && i < no + 10){
-					// 			self.list[i].show = true
-					// 		}else{
-					// 			self.list[i].show = false
-					// 		}
-					// 	})(i)
+    			// self.list.forEach(function(li){
+       //  			li.show = false;
+      	// 		})
+	      		// self.$nextTick(function(){
+					for(var i = 0;i < 500;i++){
+						(function(){
+							if(i >= self.no  && i < self.no + 10){
+								self.list.$set(i,{show :true})
+								console.log(self.no)
+							}else{
+								self.list.$set(i,{show :false})
+							}
+						})(i)
 					}
-	            });
+	            // });
 			}
 		},
 		filters: {
-	        show: function(list) {
+	        show(list){
 	            return list.filter(function(li) {
 	                return li.show;
 	            });
@@ -72,6 +69,7 @@
 		ready () {
 			this.$els.box.addEventListener('scroll', this.handleScroll);
 			this.scrollh = this.$els.box.scrollHeight
+			this.tdh = document.getElementsByTagName('td')[0].offsetHeight
 		}
 	}
 </script>
