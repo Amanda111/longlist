@@ -13,7 +13,7 @@
 		},
 		{
 			"name": "api.courses",
-			"endpoint": "/api/v1.0/courses",
+			"endpoint": "/api",
 			"async": true
 		}
 	],
