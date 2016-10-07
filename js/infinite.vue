@@ -34,7 +34,8 @@
 				toph:0,
 				scrollh:0,
 				no:0,
-				tdh:50
+				flag: true,
+				tdh:50,
 			}
 		},
 		created(){
@@ -44,7 +45,7 @@
 				.query({start:0})
    				.query({count: 20})
 				.end(function(err,res){
-					self.index+=30
+					// self.index+=20
 					Array.prototype.slice.call(res.body).forEach(function(element,index){
 						self.list.push({ text: element, show: true})
 					})
@@ -52,18 +53,59 @@
 		},
 		methods:{
 			onScroll(){
-				if (this.$els.box.scrollTop + this.$els.box.clientHeight  > this.$els.box.scrollHeight - 100) {
+				// console.log(this.$els.box.scrollTop + this.$els.box.clientHeight)
+				// console.log(this.$els.box.scrollHeight)
+				//scroll down or scroll up
+					if (this.index >=0 &&this.index <= 100) {
+						if (this.$els.box.scrollTop + this.$els.box.clientHeight  == this.$els.box.scrollHeight && this.flag == true){
+								this.doSomethingOnScroll(1);
+							}else{
+								if (this.$els.box.scrollTop > this.toph - 15 && this.$els.box.scrollTop < this.toph + 50 && this.flag == true){
+									this.doSomethingOnScroll(-1);
+								}
+						}
+					}
+			},
+			doSomethingOnScroll(e){
+				// this.flag = false
+				if (e == 1) {
 					var self = this
-					request
-						.get('/api')
-						.query({start:0})
-		   				.query({count: 5})
-						.end(function(err,res){
-							self.index+=5
-							Array.prototype.slice.call(res.body).forEach(function(element,index){
-								self.list.push({ text: element, show: true})
+					if (self.index <100) {
+						request
+							.get('/api')
+							.query({start:0})
+			   				.query({count: 5})
+							.end(function(err,res){								
+									self.index+=5
+									console.log(self.index)
+									Array.prototype.slice.call(res.body).forEach(function(element,index){
+										self.list.push({ text: element, show: true})										
+									})
+									self.list.splice(0,5)
+									self.toph+=250
 							})
-						})					
+					}
+					// self.flag = true
+				}else if(e == -1){
+					var self = this
+						request
+							.get('/api')
+							.query({start:0})
+			   				.query({count: 5})
+							.end(function(err,res){
+								if (self.index > 0){
+									self.index-=5
+									console.log(self.index)
+									Array.prototype.slice.call(res.body).forEach(function(element,index){
+										self.list.unshift({ text: element, show: true})
+										
+									})
+									self.list.splice(14,5)
+									self.toph-=250
+								}
+								
+							})
+					self.flag = true
 				}
 			},
 			// handleScroll () {
