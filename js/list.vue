@@ -26,7 +26,7 @@
 <script>
 	var request = require('superagent');
 	export default {
-		data (){
+		data () {
 			return {
 				isScrolling:false,
 				index:0,
@@ -35,21 +35,21 @@
 				scroll:0,
 				toph:0,
 				bottomh:0,
-				//user define 
+				//user define
 				tdh:50,
 				cntnr:500
 			}
 		},
-		created(){
-			var self = this
+		created() {
 			request
 				.get('/api')
 				.query({start:0})
-   				.query({ count: 20})
-				.end(function(err,res){
-					self.index+=20
+				.query({count: 20})
+				.end((err, res) => {
+					if (err) throw err
+					this.index+=20
 					console.log(res.body)
-					self.list = res.body
+					this.list = res.body
 				})
 		},
 		ready () {
@@ -58,18 +58,20 @@
 		methods:{
 			doSomethingOnScroll (direction) {
 				console.log("scrolldown")
-		            request
-	            	.get('/api')
-	            	.query({start:0})
-   					.query({ count: 5})
-	            	.end(function(err,res){
-		            	self.index += 5
-						self.scroll = self.$els.box.scrollTop
-	       				Array.prototype.slice.call(res.body).forEach(function(element,index){	       						
-	       						self.list.push(element) 
-	       					})
-	       				console.log(self.index)
-	       				self.list.splice(0,5)
+				request
+					.get('/api')
+					.query({start:0})
+					.query({count: 5})
+					.end((err, res) => {
+						if (err) throw err
+						this.index += 5
+						this.scroll = this.$els.box.scrollTop
+						Array.prototype.slice.call(res.body)
+						.forEach((element, index) => {
+							this.list.push(element)
+						})
+						console.log(self.index)
+	       				this.list.splice(0,5)
 	       				self.toph += 250
 	            	})
 			},
