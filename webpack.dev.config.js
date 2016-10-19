@@ -3,9 +3,9 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: [
-    path.resolve(__dirname, './index.js')
-  ],
+  entry: {
+    'main.js': ['./js/list.js', 'webpack-hot-middleware/client']
+  },
   output: {
     path:'/',
     // path: path.join(__dirname,'./build'),
@@ -27,12 +27,6 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue'
     }]
-    // },
-    // {
-    //   test: /\.scss$/,
-    //   exclude: /node_modules/,
-    //   loader: 'style!css?sourceMap!sass?sourceMap&sourceComments'
-    // }],
   },
   resolve: {
     extensions: ['', '.js', '.scss']
