@@ -1,3 +1,4 @@
-var list = require('./js/list');
-list()
+var vueInfiniteList = require('./src/infinite.vue');
+
+module.exports = vueInfiniteList;
 
