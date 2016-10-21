@@ -7,5 +7,5 @@ module.exports = {
 		origin:"http://localhost:8080"
 	},
 	staticDir: "/static",
-	templateDir: "/templates",
+	templateDir: "/example",
 }

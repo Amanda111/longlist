@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import app from './infinite.vue'
+import app from '../../src/infinite.vue'
 
 //listData component
 var listData = Vue.component('item', {
@@ -31,4 +31,3 @@ new Vue({
 	},
 	components:{scroll:infinite}
 })
-
